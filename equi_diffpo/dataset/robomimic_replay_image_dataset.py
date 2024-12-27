@@ -45,9 +45,26 @@ class RobomimicReplayImageDataset(BaseImageDataset):
             use_cache=False,
             seed=42,
             val_ratio=0.0,
-            n_demo=100
+            n_demo=100,
+            # filter_key=None,
+            filter_key="20_percent"
         ):
         self.n_demo = n_demo
+
+        print('----------------------------')        
+        print('dataset_path: ', dataset_path)
+        print('dataset filter key: ', filter_key)
+        print('----------------------------')
+
+
+        if filter_key!=None:
+            f = h5py.File(dataset_path, "r")
+            demos = list(f["data"].keys())
+            self.n_demo=f['mask'][filter_key].shape[0]
+            f.close()
+        print(f'------------------------------ self.n_demo={self.n_demo}------------------------------')
+
+
         rotation_transformer = RotationTransformer(
             from_rep='axis_angle', to_rep=rotation_rep)
 
@@ -248,7 +265,7 @@ def _convert_actions(raw_actions, abs_action, rotation_transformer):
 
 
 def _convert_robomimic_to_replay(store, shape_meta, dataset_path, abs_action, rotation_transformer, 
-        n_workers=None, max_inflight_tasks=None, n_demo=100):
+        n_workers=None, max_inflight_tasks=None, n_demo=100, filter_key=None):
     if n_workers is None:
         n_workers = multiprocessing.cpu_count()
     if max_inflight_tasks is None:
@@ -274,10 +291,20 @@ def _convert_robomimic_to_replay(store, shape_meta, dataset_path, abs_action, ro
     with h5py.File(dataset_path) as file:
         # count total steps
         demos = file['data']
+
+        mapping={demo_name: demo_name for demo_name in demos.keys()}
+        if filter_key!=None:
+            demo_names = [b.decode('utf-8') for b in file['mask'][filter_key]]
+            for used_demo_name, actual_demo_name in zip(demo.keys(), demo_names):
+                mapping[used_demo_name]=actual_demo_name
+
         episode_ends = list()
         prev_end = 0
         for i in range(n_demo):
-            demo = demos[f'demo_{i}']
+            used_demo_name = f'demo_{i}'
+            actual_demo_name = mapping[used_demo_name] 
+            demo = demos[actual_demo_name]
+
             episode_length = demo['actions'].shape[0]
             episode_end = prev_end + episode_length
             prev_end = episode_end
@@ -294,7 +321,9 @@ def _convert_robomimic_to_replay(store, shape_meta, dataset_path, abs_action, ro
                 data_key = 'actions'
             this_data = list()
             for i in range(n_demo):
-                demo = demos[f'demo_{i}']
+                used_demo_name = f'demo_{i}'
+                actual_demo_name = mapping[used_demo_name] 
+                demo = demos[actual_demo_name]
                 this_data.append(demo[data_key][:].astype(np.float32))
             this_data = np.concatenate(this_data, axis=0)
             if key == 'action':
@@ -341,7 +370,12 @@ def _convert_robomimic_to_replay(store, shape_meta, dataset_path, abs_action, ro
                         dtype=np.uint8
                     )
                     for episode_idx in range(n_demo):
-                        demo = demos[f'demo_{episode_idx}']
+                        # demo = demos[f'demo_{episode_idx}']
+
+                        used_demo_name = f'demo_{episode_idx}'
+                        actual_demo_name = mapping[used_demo_name] 
+                        demo = demos[actual_demo_name]
+
                         hdf5_arr = demo['obs'][key]
                         for hdf5_idx in range(hdf5_arr.shape[0]):
                             if len(futures) >= max_inflight_tasks:
