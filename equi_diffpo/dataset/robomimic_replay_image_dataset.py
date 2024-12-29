@@ -45,22 +45,21 @@ class RobomimicReplayImageDataset(BaseImageDataset):
             use_cache=False,
             seed=42,
             val_ratio=0.0,
-            n_demo=100,
-            # filter_key=None,
-            filter_key="20_percent"
+            n_demo=100, 
+            dataset_filter_key=None
         ):
         self.n_demo = n_demo
 
         print('----------------------------')        
         print('dataset_path: ', dataset_path)
-        print('dataset filter key: ', filter_key)
+        print('dataset filter key: ', dataset_filter_key)
         print('----------------------------')
 
 
-        if filter_key!=None:
+        if dataset_filter_key!=None:
             f = h5py.File(dataset_path, "r")
             demos = list(f["data"].keys())
-            self.n_demo=f['mask'][filter_key].shape[0]
+            self.n_demo=f['mask'][dataset_filter_key].shape[0]
             f.close()
         print(f'------------------------------ self.n_demo={self.n_demo}------------------------------')
 

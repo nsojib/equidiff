@@ -64,4 +64,22 @@ def main(cfg: OmegaConf):
     workspace.run()
 
 if __name__ == "__main__":
+    # import sys
+    # print("Arguments:", sys.argv)
+
     main()
+
+
+# python train.py --config-name=train_equi_diffusion_unet_abs task_name=square_d2 n_demo=100
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100
+# python train.py --config-name=train_diffusion_unet task_name=mug_cleanup_d1 n_demo=100
+
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5
+# /home/ns1254/equidiff/data/outputs/2024.12.27/08.14.15_diff_c_square_d2/checkpoints/epoch=0340-test_mean_score=0.220.ckpt
+# filter: good
+# /home/ns1254/equidiff/data/outputs/2024.12.28/06.20.02_diff_c_square_d2/checkpoints/epoch=0060-test_mean_score=0.140.ckpt
+# /home/ns1254/equidiff/data/outputs/2024.12.28/06.20.02_diff_c_square_d2/checkpoints/epoch=0170-test_mean_score=0.160.ckpt
+
+
+
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="good"

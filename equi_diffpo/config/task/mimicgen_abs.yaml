@@ -48,6 +48,7 @@ dataset:
   n_demo: ${n_demo}
   shape_meta: *shape_meta
   dataset_path: ${dataset_path}
+  dataset_filter_key: ${dataset_filter_key}
   horizon: ${horizon}
   pad_before: ${eval:'${n_obs_steps}-1+${n_latency_steps}'}
   pad_after: ${eval:'${n_action_steps}-1'}

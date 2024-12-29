@@ -43,6 +43,18 @@ Example usage:
     python dataset_states_to_obs.py --dataset /path/to/demo.hdf5 --output_name image_dense_done_1.hdf5 \
         --done_mode 1 --dense --camera_names agentview robot0_eye_in_hand --camera_height 84 --camera_width 84
 """
+
+# python dataset_states_to_obs.py --input /home/ns1254/dataset_mimicgen/square/square_raw_ns100.hdf5 --output /home/ns1254/dataset_mimicgen/square/square_raw_ns100_image.hdf5 \
+#     --done_mode 2 --camera_names agentview robot0_eye_in_hand --camera_height 84 --camera_width 84
+
+# ValueError: XML Error: Schema violation: unrecognized attribute: 'actuatorfrclimited'
+
+# python dataset_states_to_obs.py --input /home/ns1254/dataset_mimicgen/square134_2_0ind.hdf5 --output /home/ns1254/dataset_mimicgen/square134_2_0ind_image.hdf5 \
+#     --done_mode 2 --camera_names agentview robot0_eye_in_hand --camera_height 84 --camera_width 84
+
+
+
+
 import os
 import json
 import h5py

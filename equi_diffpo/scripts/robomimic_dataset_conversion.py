@@ -27,6 +27,14 @@ def worker(x):
         info = dict()
     return abs_actions, info
 
+
+# python robomimic_dataset_conversion.py -i /home/ns1254/dataset_mimicgen/square/square_raw_ns100_image.hdf5 -o /home/ns1254/dataset_mimicgen/square/square_raw_ns100_image_abs.hdf5 -n 12
+
+# python robomimic_dataset_conversion.py -i /home/ns1254/dataset_mimicgen/square134_2_0ind_image.hdf5 -o /home/ns1254/dataset_mimicgen/square134_2_0ind_image_abs.hdf5 -n 12
+
+
+
+
 @click.command()
 @click.option('-i', '--input', required=True, help='input hdf5 path')
 @click.option('-o', '--output', required=True, help='output hdf5 path. Parent directory must exist')
