@@ -17,12 +17,12 @@ from equi_diffpo.workspace.base_workspace import BaseWorkspace
 max_steps = {
     'stack_d1': 400,
     'stack_three_d1': 400,
-    'square_d2': 400,
+    'square_d2': 1200,
     'threading_d2': 400,
-    'coffee_d2': 400,
+    'coffee_d2': 1200,
     'three_piece_assembly_d2': 500,
     'hammer_cleanup_d1': 500,
-    'mug_cleanup_d1': 500,
+    'mug_cleanup_d1': 1200,
     'kitchen_d1': 800,
     'nut_assembly_d0': 500,
     'pick_place_d0': 1000,
@@ -81,5 +81,13 @@ if __name__ == "__main__":
 # /home/ns1254/equidiff/data/outputs/2024.12.28/06.20.02_diff_c_square_d2/checkpoints/epoch=0170-test_mean_score=0.160.ckpt
 
 
-
+#after max_step =1200
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="good"
+# /home/ns1254/equidiff/data/outputs/2025.01.01/23.14.22_diff_c_square_d2/checkpoints/epoch=0320-test_mean_score=0.460.ckpt
+
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
+# /home/ns1254/equidiff/data/outputs/2025.01.03/02.15.19_diff_c_square_d2/checkpoints/epoch=0370-test_mean_score=0.460.ckpt
+
+
+
+
