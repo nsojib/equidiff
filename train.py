@@ -13,6 +13,7 @@ import hydra
 from omegaconf import OmegaConf
 import pathlib
 from equi_diffpo.workspace.base_workspace import BaseWorkspace
+import json
 
 max_steps = {
     'stack_d1': 400,
@@ -60,8 +61,33 @@ def main(cfg: OmegaConf):
     OmegaConf.resolve(cfg)
 
     cls = hydra.utils.get_class(cfg._target_)
-    workspace: BaseWorkspace = cls(cfg)
+    # workspace: BaseWorkspace = cls(cfg)
+    # workspace.run()
+
+    segs_toremove = {}
+
+    # with open('/home/ns1254/gib/segs/segs_square_g40f10s10.txt', 'r') as f:
+    #     data = json.load(f)
+
+    # segs_todo= data['segs_todo']
+    # dataset_path = data['dataset_path']
+    # dataset_filter_key = data['dataset_filter_key']
+    # fn_seg = data['fn_seg']
+    # data = data['data']
+    # segs_toremove=json.loads(data)
+
+    # print(f"segs_todo: {segs_todo}")
+    # print(f"dataset_path: {dataset_path}")
+    # print(f"dataset_filter_key: {dataset_filter_key}")
+    # print(f"fn_seg: {fn_seg}") 
+    # print(f"data: {data}")
+
+    
+    workspace: BaseWorkspace = cls(cfg, segs_toremove=segs_toremove)
     workspace.run()
+
+
+
 
 if __name__ == "__main__":
     # import sys
@@ -88,6 +114,9 @@ if __name__ == "__main__":
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
 # /home/ns1254/equidiff/data/outputs/2025.01.03/02.15.19_diff_c_square_d2/checkpoints/epoch=0370-test_mean_score=0.460.ckpt
 
-
-
+# with filter
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
+# /home/ns1254/equidiff/data/outputs/2025.01.07/02.14.32_diff_c_square_d2/checkpoints/epoch=0290-test_mean_score=0.420.ckpt
+# without filter
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
 
