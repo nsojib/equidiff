@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - task: mimicgen_abs
+  - task: mimicgen_abs_real
 
 name: diff_c
 _target_: equi_diffpo.workspace.train_diffusion_unet_hybrid_workspace.TrainDiffusionUnetHybridWorkspace

@@ -32,6 +32,7 @@ max_steps = {
     'can': 400,
     'lift': 400,
     'square': 400,
+    "real": 400,
 }
 
 def get_ws_x_center(task_name):
@@ -120,3 +121,8 @@ if __name__ == "__main__":
 # without filter
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
 
+
+# python train.py --config-name=train_diffusion_unet_real task_name=real n_demo=58 dataset_path=/home/ns1254/data_franka/drawer/mixed_o40z5tal3l5taz5.hdf5
+
+
+ 

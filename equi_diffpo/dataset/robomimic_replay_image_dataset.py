@@ -91,6 +91,7 @@ class RobomimicReplayImageDataset(BaseImageDataset):
                                 store=zip_store
                             )
                     except Exception as e:
+                        print('error:', e)
                         shutil.rmtree(cache_zarr_path)
                         raise e
                 else:
@@ -196,7 +197,9 @@ class RobomimicReplayImageDataset(BaseImageDataset):
             elif key.endswith('qpos'):
                 this_normalizer = get_range_normalizer_from_stat(stat)
             else:
-                raise RuntimeError('unsupported')
+                this_normalizer = get_range_normalizer_from_stat(stat)
+                # raise RuntimeError('unsupported')
+                
             normalizer[key] = this_normalizer
 
         # image
