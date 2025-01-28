@@ -60,28 +60,30 @@ def main(cfg: OmegaConf):
     # resolve immediately so all the ${now:} resolvers
     # will use the same time.
     OmegaConf.resolve(cfg)
-
     cls = hydra.utils.get_class(cfg._target_)
-    # workspace: BaseWorkspace = cls(cfg)
-    # workspace.run()
-
+    
+     
+    # segs_file ='/home/ns1254/gib/segs/segs_square_g40f10s10.txt'
+    segs_file = None
+    
     segs_toremove = {}
+    if segs_file !=None:
+        print('using segs file: ', segs_file)
+        with open(segs_file, 'r') as f:
+            data = json.load(f)
 
-    # with open('/home/ns1254/gib/segs/segs_square_g40f10s10.txt', 'r') as f:
-    #     data = json.load(f)
+        segs_todo= data['segs_todo']
+        dataset_path = data['dataset_path']
+        dataset_filter_key = data['dataset_filter_key']
+        fn_seg = data['fn_seg']
+        data = data['data']
+        segs_toremove=json.loads(data)
 
-    # segs_todo= data['segs_todo']
-    # dataset_path = data['dataset_path']
-    # dataset_filter_key = data['dataset_filter_key']
-    # fn_seg = data['fn_seg']
-    # data = data['data']
-    # segs_toremove=json.loads(data)
-
-    # print(f"segs_todo: {segs_todo}")
-    # print(f"dataset_path: {dataset_path}")
-    # print(f"dataset_filter_key: {dataset_filter_key}")
-    # print(f"fn_seg: {fn_seg}") 
-    # print(f"data: {data}")
+        print(f"segs_todo: {segs_todo}")
+        print(f"dataset_path: {dataset_path}")
+        print(f"dataset_filter_key: {dataset_filter_key}")
+        print(f"fn_seg: {fn_seg}") 
+        print(f"data: {data}")
 
     
     workspace: BaseWorkspace = cls(cfg, segs_toremove=segs_toremove)
@@ -122,7 +124,10 @@ if __name__ == "__main__":
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
 
 
+# real robot training.
 # python train.py --config-name=train_diffusion_unet_real task_name=real n_demo=58 dataset_path=/home/ns1254/data_franka/drawer/mixed_o40z5tal3l5taz5.hdf5
+# python train.py --config-name=train_diffusion_unet_real task_name=real n_demo=58 dataset_path=/home/ns1254/data_franka/drawer/mixed_o40z5tal3l5taz5.hdf5 dataset_filter_key="g40" 
+
 
 
  
