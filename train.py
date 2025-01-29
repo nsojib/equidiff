@@ -65,103 +65,27 @@ def main(cfg: OmegaConf):
     
     segments_toremove_file = cfg.segments_toremove_file
 
-   
-    # segs_file ='/home/ns1254/gib/segs/segs_square_g40f10s10.txt' 
-    # segs_file = "/home/ns1254/gib/segs/segs_square_md40_g40b30_0ind.txt" 
-    # segs_file = None
-
-    if os.path.exists(segments_toremove_file):
-        segs_file = segments_toremove_file
-    else:
-        segs_file = None
-
     
-    segs_toremove = {}
-    if segs_file !=None:
-        print('using segs file: ', segs_file)
-        with open(segs_file, 'r') as f:
-            data = json.load(f)
-
-        segs_todo= data['segs_todo']
-        dataset_path = data['dataset_path']
-        dataset_filter_key = data['dataset_filter_key']
-        fn_seg = data['fn_seg']
+    if os.path.exists(segments_toremove_file):
+        print('using segs file: ', segments_toremove_file)
+        with open(segments_toremove_file, 'r') as f:
+            data = json.load(f) 
         data = data['data']
-        segs_toremove=json.loads(data)
-
-        print(f"segs_todo: {segs_todo}")
-        print(f"dataset_path: {dataset_path}")
-        print(f"dataset_filter_key: {dataset_filter_key}")
-        print(f"fn_seg: {fn_seg}") 
-        print(f"data: {data}")
-
+        segs_toremove=json.loads(data) 
+    else:
+        segs_toremove = {}  
+    
+    print(f"segs_toremove: {segs_toremove}") 
 
     if len(segs_toremove)>1:
-        print('fresh loading without cache...')
+        print('Fresh loading without cache...')
         cfg.task.dataset.use_cache = False
 
     workspace: BaseWorkspace = cls(cfg, segs_toremove=segs_toremove)
-    workspace.run()
+    workspace.run() 
 
 
-
-
-if __name__ == "__main__":
-    # import sys
-    # print("Arguments:", sys.argv)
-
+if __name__ == "__main__": 
     main()
 
-
-# python train.py --config-name=train_equi_diffusion_unet_abs task_name=square_d2 n_demo=100
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100
-# python train.py --config-name=train_diffusion_unet task_name=mug_cleanup_d1 n_demo=100
-
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5
-# /home/ns1254/equidiff/data/outputs/2024.12.27/08.14.15_diff_c_square_d2/checkpoints/epoch=0340-test_mean_score=0.220.ckpt
-# filter: good
-# /home/ns1254/equidiff/data/outputs/2024.12.28/06.20.02_diff_c_square_d2/checkpoints/epoch=0060-test_mean_score=0.140.ckpt
-# /home/ns1254/equidiff/data/outputs/2024.12.28/06.20.02_diff_c_square_d2/checkpoints/epoch=0170-test_mean_score=0.160.ckpt
-
-
-#after max_step =1200
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="good"
-# /home/ns1254/equidiff/data/outputs/2025.01.01/23.14.22_diff_c_square_d2/checkpoints/epoch=0320-test_mean_score=0.460.ckpt
-
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
-# /home/ns1254/equidiff/data/outputs/2025.01.03/02.15.19_diff_c_square_d2/checkpoints/epoch=0370-test_mean_score=0.460.ckpt
-
-# with filter.
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
-
-
-# python train.py --config-name=train_diffusion_unet \
-#     task_name=square_d2 \
-#     dataset_path="/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5" \
-#     dataset_filter_key="g40b30" \
-#     segments_toremove_file="/home/ns1254/gib/segs/square_g40b30/segs_square_md40_g40b30_0ind.txt" 
-
-# python train.py --config-name=train_diffusion_unet \
-#     task_name=square_d2 \
-#     dataset_path="/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5" \
-#     dataset_filter_key="g40b30" \
-#     segments_toremove_file="/home/ns1254/gib/segs/square_g40b30/segs_square_lof40_g40b30_0ind.txt" 
-
-
-
-
-# with filter
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
-# /home/ns1254/equidiff/data/outputs/2025.01.07/02.14.32_diff_c_square_d2/checkpoints/epoch=0290-test_mean_score=0.420.ckpt
-# without filter
-# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
-# /home/ns1254/equidiff/data/outputs/2025.01.08/10.12.07_diff_c_square_d2/checkpoints/epoch=0200-test_mean_score=0.400.ckpt
-
-
-# real robot training.
-# python train.py --config-name=train_diffusion_unet_real task_name=real n_demo=58 dataset_path=/home/ns1254/data_franka/drawer/mixed_o40z5tal3l5taz5.hdf5
-# python train.py --config-name=train_diffusion_unet_real task_name=real n_demo=58 dataset_path=/home/ns1254/data_franka/drawer/mixed_o40z5tal3l5taz5.hdf5 dataset_filter_key="g40" 
-
-
-
- 
+# see readme2.md
