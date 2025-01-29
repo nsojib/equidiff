@@ -14,6 +14,7 @@ from omegaconf import OmegaConf
 import pathlib
 from equi_diffpo.workspace.base_workspace import BaseWorkspace
 import json
+import os 
 
 max_steps = {
     'stack_d1': 400,
@@ -29,10 +30,10 @@ max_steps = {
     'pick_place_d0': 1000,
     'coffee_preparation_d1': 800,
     'tool_hang': 700,
-    'can': 400,
+    'can': 800,
     'lift': 400,
-    'square': 400,
-    "real": 400,
+    'square': 800,
+    "real": 800,
 }
 
 def get_ws_x_center(task_name):
@@ -62,14 +63,18 @@ def main(cfg: OmegaConf):
     OmegaConf.resolve(cfg)
     cls = hydra.utils.get_class(cfg._target_)
     
-     
+    segments_toremove_file = cfg.segments_toremove_file
 
    
-    # segs_file ='/home/ns1254/gib/segs/segs_square_g40f10s10.txt'
-
-    segs_file = "/home/ns1254/gib/segs/segs_square_md40_g40b30_0ind.txt"
-
+    # segs_file ='/home/ns1254/gib/segs/segs_square_g40f10s10.txt' 
+    # segs_file = "/home/ns1254/gib/segs/segs_square_md40_g40b30_0ind.txt" 
     # segs_file = None
+
+    if os.path.exists(segments_toremove_file):
+        segs_file = segments_toremove_file
+    else:
+        segs_file = None
+
     
     segs_toremove = {}
     if segs_file !=None:
@@ -128,6 +133,21 @@ if __name__ == "__main__":
 
 # with filter.
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
+
+
+# python train.py --config-name=train_diffusion_unet \
+#     task_name=square_d2 \
+#     dataset_path="/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5" \
+#     dataset_filter_key="g40b30" \
+#     segments_toremove_file = "/home/ns1254/gib/segs/square_g40b30/segs_square_md40_g40b30_0ind.txt" 
+
+# python train.py --config-name=train_diffusion_unet \
+#     task_name=square_d2 \
+#     dataset_path="/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5" \
+#     dataset_filter_key="g40b30" \
+#     segments_toremove_file = "/home/ns1254/gib/segs/square_g40b30/segs_square_lof40_g40b30_0ind.txt" 
+
+
 
 
 # with filter

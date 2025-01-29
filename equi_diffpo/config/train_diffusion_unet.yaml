@@ -20,6 +20,7 @@ obs_as_global_cond: True
 dataset: equi_diffpo.dataset.robomimic_replay_image_dataset.RobomimicReplayImageDataset
 dataset_path: data/robomimic/datasets/${task_name}/${task_name}_abs.hdf5
 dataset_filter_key: null
+segments_toremove_file: null
 
 policy:
   _target_: equi_diffpo.policy.diffusion_unet_hybrid_image_policy.DiffusionUnetHybridImagePolicy
