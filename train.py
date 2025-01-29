@@ -28,7 +28,7 @@ max_steps = {
     'kitchen_d1': 800,
     'nut_assembly_d0': 500,
     'pick_place_d0': 1000,
-    'coffee_preparation_d1': 800,
+    'coffee_preparation_d1': 1200,
     'tool_hang': 700,
     'can': 800,
     'lift': 400,
@@ -64,7 +64,8 @@ def main(cfg: OmegaConf):
     cls = hydra.utils.get_class(cfg._target_)
     
     segments_toremove_file = cfg.segments_toremove_file
-
+    if segments_toremove_file is None:
+        segments_toremove_file=""
     
     if os.path.exists(segments_toremove_file):
         print('using segs file: ', segments_toremove_file)
