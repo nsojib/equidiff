@@ -31,4 +31,12 @@
 
 
 
- 
+# wget https://universitysystemnh-my.sharepoint.com/:u:/g/personal/mb1215_usnh_edu/EQFhCnDeNTJNio5Kt9OdurIBTrMvzHeF_qyMq1C1W3HUkA?download=1 -O mug124_0ind_abs.hdf5
+
+# wget https://universitysystemnh-my.sharepoint.com/:u:/g/personal/mb1215_usnh_edu/Ee7M6uF451pIqQ2ZAUOeKeIB0FzNln4x0OQgrW1Mw-mDXQ?download=1 -O coffee_gfs_109_2_0ind_abs.hdf5
+
+# wget https://universitysystemnh-my.sharepoint.com/:u:/g/personal/mb1215_usnh_edu/EY6AFnj-knRAitdMJTymPycB4XmQAVpfk_PiEsfhaORtPQ?download=1 -O kitchen82_31_0ind_abs.hdf5
+
+# wget https://universitysystemnh-my.sharepoint.com/:u:/g/personal/mb1215_usnh_edu/EbV-0_kXWdlJiFnqL86pgHEB4oxMFd0Icso_3viSoag3Vw?download=1 -O square134_2_0ind_abs.hdf5
+
+
