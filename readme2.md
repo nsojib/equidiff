@@ -70,3 +70,9 @@ python train.py --config-name=train_diffusion_unet \
 ```
 
 
+### kitchen
+python train.py --config-name=train_diffusion_unet \
+     task_name=kitchen_d1 \
+     dataset_path="/home/ubuntu/dataset_mimicgen/kitchen82_31_0ind_abs.hdf5" \
+     dataset_filter_key="g30b20"
+     
