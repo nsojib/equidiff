@@ -60,6 +60,7 @@ class RobomimicReplayImageDataset(BaseImageDataset):
             f = h5py.File(dataset_path, "r")
             demos = list(f["data"].keys())
             self.n_demo=f['mask'][dataset_filter_key].shape[0]
+            n_demo = self.n_demo
             f.close()
         print(f'------------------------------ self.n_demo={self.n_demo}------------------------------')
 
@@ -84,7 +85,8 @@ class RobomimicReplayImageDataset(BaseImageDataset):
                             dataset_path=dataset_path, 
                             abs_action=abs_action, 
                             rotation_transformer=rotation_transformer,
-                            n_demo=n_demo)
+                            n_demo=n_demo,
+                            filter_key=dataset_filter_key)
                         print('Saving cache to disk.')
                         with zarr.ZipStore(cache_zarr_path) as zip_store:
                             replay_buffer.save_to_store(
@@ -107,7 +109,8 @@ class RobomimicReplayImageDataset(BaseImageDataset):
                 dataset_path=dataset_path, 
                 abs_action=abs_action, 
                 rotation_transformer=rotation_transformer,
-                n_demo=n_demo)
+                n_demo=n_demo,
+                filter_key=dataset_filter_key)
 
         rgb_keys = list()
         lowdim_keys = list()
@@ -294,17 +297,39 @@ def _convert_robomimic_to_replay(store, shape_meta, dataset_path, abs_action, ro
         # count total steps
         demos = file['data']
 
-        mapping={demo_name: demo_name for demo_name in demos.keys()}
+        mapping={demo_name: demo_name for demo_name in list(demos.keys())[:n_demo]}
+
         if filter_key!=None:
             demo_names = [b.decode('utf-8') for b in file['mask'][filter_key]]
-            for used_demo_name, actual_demo_name in zip(demo.keys(), demo_names):
+
+            #--------------------------start hack 0-1 -----------------
+            # for si in range(len(demo_names)):
+            #     dn = demo_names[si]
+            #     # print("demonames: ", dn, dn.split("_")[1])
+            #     demo_names[si] = "demo_"+str( eval(dn.split("_")[1])+1  )
+            #--------------------------end hack 0-1 -----------------
+            # print(demo_names) 
+            # print('------------------------')
+            # print(len(demo_names), len(demos.keys()))
+            # print('------------------------')
+
+            si = 0
+            for used_demo_name, actual_demo_name in zip( list(demos.keys())[:n_demo], demo_names):  #TODO: remove zip
+                used_demo_name = f"demo_{si}"
+                si+=1
                 mapping[used_demo_name]=actual_demo_name
+
+            # print('---------------------maping done--------------')
+
 
         episode_ends = list()
         prev_end = 0
         for i in range(n_demo):
             used_demo_name = f'demo_{i}'
             actual_demo_name = mapping[used_demo_name] 
+
+            # print(i, used_demo_name, actual_demo_name, n_demo)
+
             demo = demos[actual_demo_name]
 
             episode_length = demo['actions'].shape[0]

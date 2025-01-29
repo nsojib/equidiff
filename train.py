@@ -139,13 +139,13 @@ if __name__ == "__main__":
 #     task_name=square_d2 \
 #     dataset_path="/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5" \
 #     dataset_filter_key="g40b30" \
-#     segments_toremove_file = "/home/ns1254/gib/segs/square_g40b30/segs_square_md40_g40b30_0ind.txt" 
+#     segments_toremove_file="/home/ns1254/gib/segs/square_g40b30/segs_square_md40_g40b30_0ind.txt" 
 
 # python train.py --config-name=train_diffusion_unet \
 #     task_name=square_d2 \
 #     dataset_path="/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5" \
 #     dataset_filter_key="g40b30" \
-#     segments_toremove_file = "/home/ns1254/gib/segs/square_g40b30/segs_square_lof40_g40b30_0ind.txt" 
+#     segments_toremove_file="/home/ns1254/gib/segs/square_g40b30/segs_square_lof40_g40b30_0ind.txt" 
 
 
 
