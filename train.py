@@ -63,8 +63,13 @@ def main(cfg: OmegaConf):
     cls = hydra.utils.get_class(cfg._target_)
     
      
+
+   
     # segs_file ='/home/ns1254/gib/segs/segs_square_g40f10s10.txt'
-    segs_file = None
+
+    segs_file = "/home/ns1254/gib/segs/segs_square_md40_g40b30_0ind.txt"
+
+    # segs_file = None
     
     segs_toremove = {}
     if segs_file !=None:
@@ -85,7 +90,11 @@ def main(cfg: OmegaConf):
         print(f"fn_seg: {fn_seg}") 
         print(f"data: {data}")
 
-    
+
+    if len(segs_toremove)>1:
+        print('fresh loading without cache...')
+        cfg.task.dataset.use_cache = False
+
     workspace: BaseWorkspace = cls(cfg, segs_toremove=segs_toremove)
     workspace.run()
 
@@ -117,11 +126,16 @@ if __name__ == "__main__":
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
 # /home/ns1254/equidiff/data/outputs/2025.01.03/02.15.19_diff_c_square_d2/checkpoints/epoch=0370-test_mean_score=0.460.ckpt
 
+# with filter.
+# python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/gib/square134_2_0ind_abs.hdf5 dataset_filter_key="g40b30"
+
+
 # with filter
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
 # /home/ns1254/equidiff/data/outputs/2025.01.07/02.14.32_diff_c_square_d2/checkpoints/epoch=0290-test_mean_score=0.420.ckpt
 # without filter
 # python train.py --config-name=train_diffusion_unet task_name=square_d2 n_demo=100 dataset_path=/home/ns1254/dataset_mimicgen/square134_2_0ind_abs.hdf5 dataset_filter_key="g40f10s10" 
+# /home/ns1254/equidiff/data/outputs/2025.01.08/10.12.07_diff_c_square_d2/checkpoints/epoch=0200-test_mean_score=0.400.ckpt
 
 
 # real robot training.
