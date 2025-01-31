@@ -25,7 +25,7 @@ max_steps = {
     'three_piece_assembly_d2': 500,
     'hammer_cleanup_d1': 500,
     'mug_cleanup_d1': 1200,
-    'kitchen_d1': 800,
+    'kitchen_d1': 3000,
     'nut_assembly_d0': 500,
     'pick_place_d0': 1000,
     'coffee_preparation_d1': 1200,
