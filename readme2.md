@@ -70,6 +70,13 @@ python train.py --config-name=train_diffusion_unet \
 ```
 
 
+python train.py --config-name=train_diffusion_unet \
+     task_name=square_d2 \
+     dataset_path="/home/ns1254/robomimic/datasets/square/mh/image_v141_abs.hdf5" \
+     dataset_filter_key="better"
+
+
+
 ### kitchen
 python train.py --config-name=train_diffusion_unet \
      task_name=kitchen_d1 \
