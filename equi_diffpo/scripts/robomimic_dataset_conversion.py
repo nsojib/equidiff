@@ -32,6 +32,7 @@ def worker(x):
 
 # python robomimic_dataset_conversion.py -i /home/ns1254/dataset_mimicgen/square134_2_0ind_image.hdf5 -o /home/ns1254/dataset_mimicgen/square134_2_0ind_image_abs.hdf5 -n 12
 
+# python robomimic_dataset_conversion.py -i /home/ns1254/robomimic/datasets/can/mh/image_v141_can30.hdf5 -o /home/ns1254/robomimic/datasets/can/mh/image_v141_can30_abs.hdf5 -n 12
 
 
 
