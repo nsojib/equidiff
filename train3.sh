@@ -1,16 +1,17 @@
 #!/bin/bash
 
-THIS_COMPUTER_ID="vast_126"  #TODO: A name and last part of the ip address.
+
 CONFIG_NAME="train_diffusion_unet"
 SEEDS=(42 43 44)
 
 
 #------------------Edit below------------------
-TASK_NAME="square_d2" #TODO: change to your task name
-DATASET_PATH="/root/square_s4_abs.hdf5" #TODO: change to your dataset path
-TOREMOVE_FILE="/root/segs_index_rm40_gib_gib_square_abs_s4_70_param_h200.json" #TODO: change to your segments to remove file path
-N_DEMO=70 #TODO: change to the number of demos in the dataset. (square,coffee has 70, mug has 60, kitchen has 50)
-SUFFIX="bed_rm30" #TODO: change to a suffix that describes your experiment
+THIS_COMPUTER_ID="vast_126"  #A name and last part of the ip address.
+TASK_NAME="square_d2" #change to your task name
+DATASET_PATH="/root/square_s4_abs.hdf5" #change to your dataset path
+TOREMOVE_FILE="/root/segs_index_rm40_gib_gib_square_abs_s4_70_param_h200.json" #change to your segments to remove file path
+N_DEMO=70 #change to the number of demos in the dataset. (square,coffee has 70, mug has 60, kitchen has 50)
+SUFFIX="bed_rm30" #change to a suffix that describes your experiment
 #------------------Edit above------------------
 
 
